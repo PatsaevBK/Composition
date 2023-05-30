@@ -70,15 +70,4 @@ object GameRepositoryImpl : GameRepository {
         }
     }
 
-    override fun getGameResult(
-        countOfRightAnswers: Int,
-        countOfQuestions: Int,
-        gameSettings: GameSettings
-    ): GameResult {
-        val percentOfRightAnswers: Int =
-            (countOfRightAnswers / countOfQuestions.toLong() * 100).toInt()
-        val winner: Boolean =
-            (countOfRightAnswers >= gameSettings.minCountOfRightAnswers && percentOfRightAnswers >= gameSettings.minPercentOfRightAnswers)
-        return GameResult(winner, countOfRightAnswers, countOfQuestions, gameSettings)
-    }
 }

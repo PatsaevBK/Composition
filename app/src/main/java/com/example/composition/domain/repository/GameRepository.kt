@@ -14,11 +14,6 @@ interface GameRepository {
 
     fun getGameSettings(level: Level): GameSettings
 
-    fun getGameResult(
-        countOfRightAnswers: Int,
-        countOfQuestions: Int,
-        gameSettings: GameSettings
-    ): GameResult
 
 
 }
