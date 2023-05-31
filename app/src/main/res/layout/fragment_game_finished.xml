@@ -12,7 +12,6 @@
         android:layout_height="158dp"
         android:layout_margin="48dp"
         android:contentDescription="@string/game_over"
-        android:src="@drawable/ic_smile"
         app:layout_constraintBottom_toTopOf="@id/tv_required_answers"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

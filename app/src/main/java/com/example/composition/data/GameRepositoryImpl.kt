@@ -17,9 +17,7 @@ object GameRepositoryImpl : GameRepository {
 
     override fun generateQuestion(maxSumValue: Int, countOfOptions: Int): Question {
         val sum = Random.nextInt(MIN_SUM_VALUE, maxSumValue + 1)
-        Log.d("GameRepositoryImpl", "$sum")
         val visibleNumber = Random.nextInt(MIN_ANSWER_VALUE, sum - 1)
-        Log.d("GameRepositoryImpl", "$visibleNumber")
         val answers = HashSet<Int>()
         val rightAnswer = sum - visibleNumber
         answers.add(rightAnswer)
@@ -28,7 +26,6 @@ object GameRepositoryImpl : GameRepository {
         while (answers.size < countOfOptions) {
             answers.add(Random.nextInt(from, to))
         }
-        Log.d("GameRepositoryImpl", "$answers")
         return Question(sum, visibleNumber, answers.shuffled().toList())
     }
 
@@ -70,15 +67,4 @@ object GameRepositoryImpl : GameRepository {
         }
     }
 
-    override fun getGameResult(
-        countOfRightAnswers: Int,
-        countOfQuestions: Int,
-        gameSettings: GameSettings
-    ): GameResult {
-        val percentOfRightAnswers: Int =
-            (countOfRightAnswers / countOfQuestions.toLong() * 100).toInt()
-        val winner: Boolean =
-            (countOfRightAnswers >= gameSettings.minCountOfRightAnswers && percentOfRightAnswers >= gameSettings.minPercentOfRightAnswers)
-        return GameResult(winner, countOfRightAnswers, countOfQuestions, gameSettings)
-    }
 }

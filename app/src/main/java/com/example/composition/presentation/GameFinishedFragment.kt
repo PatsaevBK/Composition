@@ -27,6 +27,11 @@ class GameFinishedFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        setListeners()
+        setResult()
+    }
+
+    private fun setListeners() {
         val callback = object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 retryGame()
@@ -36,14 +41,29 @@ class GameFinishedFragment : Fragment() {
         binding.buttonTryAgain.setOnClickListener {
             retryGame()
         }
-        gameResult?.let {
-            binding.tvRequiredAnswers.text = getString(R.string.require_answers, it.gameSettings.minCountOfRightAnswers.toString())
-            binding.tvRequiredPercentage.text = getString(R.string.require_percentage, it.gameSettings.minPercentOfRightAnswers.toString())
-            binding.tvScoreAnswers.text = getString(R.string.score, it.countOfRightAnswers.toString())
-            val percentRight = ((it.countOfRightAnswers/it.countOfQuestions.toDouble()) * 100).toInt()
-            binding.tvScorePercentage.text = getString(R.string.score_percent, percentRight.toString())
-        }
+    }
 
+    private fun setResult() {
+        gameResult?.let {
+            val imgId = if (it.winner) R.drawable.ic_smile else R.drawable.sad_face
+            with(binding) {
+                emojiResult.setImageResource(imgId)
+                tvRequiredAnswers.text = getString(
+                    R.string.require_answers,
+                    it.gameSettings.minCountOfRightAnswers.toString()
+                )
+                tvRequiredPercentage.text = getString(
+                    R.string.require_percentage,
+                    it.gameSettings.minPercentOfRightAnswers.toString()
+                )
+                tvScoreAnswers.text =
+                    getString(R.string.score, it.countOfRightAnswers.toString())
+                val percentRight =
+                    ((it.countOfRightAnswers / it.countOfQuestions.toDouble()) * 100).toInt()
+                tvScorePercentage.text =
+                    getString(R.string.score_percent, percentRight.toString())
+            }
+        }
     }
 
     override fun onCreateView(
